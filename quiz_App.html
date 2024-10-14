@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuizApp</title>
+    <style>
+        body {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        #container {
+            width: 100%;
+            background-image: linear-gradient(rgb(88, 235, 174), rgb(58, 221, 164));
+            background-repeat: no-repeat;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            text-align: center;
+            height: 99.78vh;
+        }
+
+        #quiz {
+            margin: auto;
+            width: 400px;
+            text-align: center;
+
+            padding: 2em;
+
+        }
+
+        button {
+            background: black;
+            color: white;
+            width: 100px;
+            display: block;
+            margin: auto;
+            padding: 0.5em;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+
+        <div id="quiz">
+            <h1 style="border: 2px solid black;">Quiz Application</h1>
+            <h2 id="question">
+
+            </h2>
+            <div id="options">
+
+            </div>
+        </div>
+        <div id="result">
+
+        </div>
+        <button id="next">next</button>
+    </div>
+
+
+
+
+    <script src="./jquery-3.7.1.min.js"></script>
+    <script>
+        const quiz = [
+            {
+                "question": "What is the Array",
+                "options": ["To store One data", "To store multiple data", "datatype", "none"],
+                "answer": "To store multiple data",
+            },
+            {
+                "question": "How to create integer variable in c?",
+                "options": ["int b;", "float c;", "doubble c;", "long int c;"],
+                "answer": "int b;",
+            },
+            {
+                "question": "how to print text in console?",
+                "options": ["printf()", "scanf()", "print()", "System.out.println()"],
+                "answer": "printf()",
+            },
+            {
+                "question": "How to create the function in c langauge",
+                "options": ["function name(){}", "functions name(){}", "def(){}", "define(){}"],
+                "answer": "function name(){}",
+            }
+        ]
+
+
+
+        let currentQuestion = 0;
+        let score = 0;
+        function LoadQuiz() {
+
+            $("#options").empty();
+            $("#question").text(quiz[currentQuestion].question);
+
+
+            let options = quiz[currentQuestion].options;
+            options.map((data) => {
+
+
+                $("#options").append(`
+                    <input type='radio' value='${data}' name='option'>
+                    <label>${data}</label><br/> 
+                
+                `);
+            })
+
+
+        }
+
+
+
+        function checkAnswer() {
+            let selectedOption = $("input[name='option']:checked").val();
+
+            if (selectedOption === quiz[currentQuestion].answer) {
+                score++;
+                console.log(score);
+            }
+        }
+        LoadQuiz();
+        $("#next").click(function () {
+
+
+
+
+
+
+            checkAnswer();
+            currentQuestion++;
+            if (currentQuestion < quiz.length) {
+                LoadQuiz();
+
+            }
+            else {
+                $("#quiz").hide();
+                $("#option").hide();
+                $("#next").hide();
+
+                if (score > 2) {
+                    $("#result").html(`
+                    <h4>Your score out of 4/${score}</h4>
+                `);
+                }
+                else {
+                    $("#result").html(`
+                    <h4>You are fail please try again</h4>
+                  
+                `);
+                }
+
+            }
+
+        });
+    </script>
+</body>
+
+</html>
